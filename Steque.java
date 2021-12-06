@@ -17,46 +17,71 @@
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-
+ 
+ 
 /**
- * 
- * Steque is a stack-ended data structure which 
- * supports stack operations as well as queue's 
+ *
+ * Steque is a stack-ended data structure which
+ * supports stack operations as well as queue's
  * enqueue operation.
- * 
- * @author 
+ *
+ * @author
  * @version 1.0
  *
  */
 public class Steque<Item> implements Iterable<Item> {
-
-
+    private Item[] a;
+    private int n;
+    private int first;
+    private static int incapacity=10;
     /**
      * constructs a steque object.
      */
     public Steque() {
-
+        a=(Item[]) new Object[incapacity];
+        n=0;
+        first=0;
     }
-    
-    
+   
+   
     /**
      * inserts an item in the steque in queue fashion.
      * @param item Item to be inserted.
      */
+    //Time complexity:O(N) Space Complexity:O(N)
     public void enqueue(Item item) {
-
+        if(item==null)
+            throw new IllegalArgumentException();
+        if(n>=a.length)
+            resize(2*a.length);
+            for(int i=a.length-1;i>0;i--)
+                a[i]=a[i-1];
+                a[0]=item;
+                n++;
     }
-    
+    private void resize(int capacity){
+        Item temp[]=(Item[]) new Object[capacity];
+        for(int k=0;k<a.length;k++){
+            temp[k]=a[k];
+        }
+        a=temp;
+    }
+
     
     /**
      * inserts an item in the steque in stack fashion.
      * @param item Item to be inserted.
      */
+    ////Time complexity:O(1) Space Complexity:O(N)
     public void push(Item item) {
-
+        if(item==null)
+            throw new IllegalArgumentException();
+        if(n>=a.length)
+            resize(2*a.length);
+            a[n]=item;
+            n++;
     }
-    
+
     /**
      * pops a least recent item in steque.
      * @return Item object from steque.
